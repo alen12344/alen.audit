@@ -40,23 +40,29 @@ Dengan desain UI terminal yang memukau (diperkuat oleh `Rich` library) dan lapor
 
 ---
 
-## 🛠️ Instalasi & Persiapan
+## 🛠️ Instalasi & Persiapan (Termasuk Kali Linux)
 
 ### 1. Kebutuhan Sistem
-Pastikan Anda sudah menginstal **Python 3.11+** di sistem Windows/Linux/MacOS Anda, dan pastikan juga `nmap` telah terpasang di *environment* sistem Anda (karena dibutuhkan oleh modul scanner).
+Pastikan Anda sudah menginstal **Python 3.11+** di sistem Windows/Linux/MacOS Anda, dan pastikan juga `nmap` telah terpasang di *environment* sistem Anda.
+(Jika menggunakan **Kali Linux**, `nmap` dan `python3` sudah terinstal secara _default_).
 
-### 2. Pemasangan Tool
-Lakukan *clone* atau buka folder proyek ini. Lalu, jalan prosedur _virtual environment_ dan instalasi via `pip`:
+### 2. Cara Install dari GitHub (Direkomendasikan untuk Kali Linux)
+Buka terminal kesayangan Anda (misalnya QTerminal/GNOME Terminal di Kali) dan jalankan runtutan perintah berikut:
 
 ```bash
-# 1. Masuk ke direktori
-cd alen_enterprise
+# 1. Clone repository dari GitHub
+git clone https://github.com/alen12344/alen.audit.git
 
-# 2. Buat & Aktifkan Virtual Environment (Contoh di PowerShell Windows)
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+# 2. Masuk ke direktori
+cd alen.audit/alen_enterprise
 
-# 3. Install Alat (Development Mode)
+# 3. Buat Virtual Environment 
+python3 -m venv .venv
+
+# 4. Aktifkan Virtual Environment
+source .venv/bin/activate
+
+# 5. Pasang dependensi dan Install Alat
 pip install -e .
 ```
 
