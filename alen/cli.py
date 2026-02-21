@@ -7,6 +7,7 @@ from rich.align import Align
 from rich.text import Text
 from rich.prompt import Prompt
 from alen import __version__
+from alen.config.settings import settings
 
 console = Console()
 
@@ -54,6 +55,19 @@ def cli():
     """Alen Enterprise: AI-Powered Information Systems Audit Tool."""
     show_banner()
     
+    if not settings.GEMINI_API_KEY:
+        console.print("[bold yellow]⚠️  API Key Gemini belum dikonfigurasi![/bold yellow]")
+        console.print("Dapatkan API Key gratis di: [cyan]https://aistudio.google.com/[/cyan]")
+        api_key = Prompt.ask("\n[bold bright_green]Masukkan API Key Gemini Anda[/bold bright_green]", password=True)
+        if api_key:
+            settings.save_api_key(api_key.strip())
+            console.print("[bold green]✅ API Key berhasil disimpan untuk sesi selanjutnya![/bold green]")
+            time.sleep(1)
+            show_banner()
+        else:
+            console.print("[bold red]API Key wajib diisi untuk menggunakan fitur AI. Keluar...[/bold red]")
+            sys.exit(1)
+            
     while True:
         console.print("\n[bold cyan]=== MENU UTAMA ALEN ===[/bold cyan]")
         console.print("[1] 🔍 Lakukan Cyber Security Scan")

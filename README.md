@@ -67,16 +67,13 @@ pip install -e .
 ```
 
 ### 3. Konfigurasi Kunci AI (API Key)
-`Alen Enterprise` hidup berdampingan dengan kecerdasan Gemini Ote. Anda butuh API Key dari Google AI Studio.
+`Alen Enterprise` kini dirancang menjadi **sangat praktis**. Anda **TIDAK PERLU** lagi repot-repot membuat atau mengedit file `.env` secara manual!
 
-1. _Copy_ file sampel `.env.example` menjadi `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-2. Buka `.env` dan masukkan _API Key_ Gemini Anda (Dapatkan secara gratis dari [Google AI Studio](https://aistudio.google.com/)).
-   ```env
-   GEMINI_API_KEY=AIzaSy...kunci-rahasia-anda...
-   ```
+Cukup dapatkan API Key dari alat ini melalui [Google AI Studio](https://aistudio.google.com/), lalu jalankan aplikasi untuk pertama kali:
+```bash
+alen-audit
+```
+Aplikasi akan secara **otomatis** meminta Anda memasukkan API Key dan menyimpannya ke sistem secara aman (ke dalam `~/.alen_env`).
 
 ---
 
@@ -87,24 +84,19 @@ Buka terminal kesayangan Anda lalu jalankan salah satu dari dua fitur utama:
 ### Bantuan & Panel Utama
 Tampilkan animasi inisialisasi dan daftar menu yang tersedia:
 ```bash
-alen --help
+alen-audit
 ```
 
 ### 🎯 1. Menjalankan Cyber Scan Target
 Memulai pemindaian keamanan agresif terhadap target IP atau _Domain_.
-```bash
-# Scan default top 100 Port
-alen cyber scan --target 127.0.0.1
-
-# Scan di Port Spesifik (misal web port)
-alen cyber scan --target 127.0.0.1 --ports 80,443
+Pilih opsi **1** pada menu interaktif, lalu masukkan URL:
+```text
+Masukkan URL Target (contoh: https://target.com): https://dharmawacana.ac.id
 ```
 
 ### 📋 2. Membuat Sesi IS Audit Baru
 Menginisialisasi proyek audit baru untuk pengumpulan bukti-bukti logikal dan _compliance_.
-```bash
-alen audit init --name "Proyek Audit Server Lokal 2026"
-```
+Pilih opsi **2** pada menu interaktif, lalu ikuti instruksinya.
 
 ---
 
