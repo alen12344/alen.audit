@@ -365,49 +365,31 @@
             <div class="logo">Alen Enterprise</div>
             <div class="subtitle">AI Security Intelligence Report</div>
             <div class="meta-info">
-                Target: <strong>{{ project_name }}</strong> &nbsp;|&nbsp;
-                Eval: <strong>{{ date }}</strong>
+                Target: <strong>Kali Target Scan</strong> &nbsp;|&nbsp;
+                Eval: <strong>2026-02-22 20:29:58</strong>
             </div>
         </div>
 
-        {% set critical_count = findings | selectattr('severity', 'equalto', 'Critical') | list | length %}
-        {% set high_count = findings | selectattr('severity', 'equalto', 'High') | list | length %}
-        {% set med_count = findings | selectattr('severity', 'equalto', 'Medium') | list | length %}
-        {% set low_count = findings | selectattr('severity', 'equalto', 'Low') | list | length %}
-        {% set info_count = findings | selectattr('severity', 'equalto', 'Info') | list | length %}
-        {% set total_issues = findings | length %}
-        {% set total_issues = critical_count + high_count %}
+        
+        
+        
 
         <div class="metrics-container">
-            <div class="metric-card {% if critical_count > 0 %}m-critical{% else %}m-safe{% endif %}">
-                <div class="metric-value">{{ critical_count }}</div>
+            <div class="metric-card m-critical">
+                <div class="metric-value">1</div>
                 <div class="metric-label">Critical Threats</div>
             </div>
-            <div class="metric-card {% if high_count > 0 %}m-warning{% else %}m-safe{% endif %}">
-                <div class="metric-value">{{ high_count }}</div>
+            <div class="metric-card m-warning">
+                <div class="metric-value">1</div>
                 <div class="metric-label">High Risks</div>
             </div>
             <div class="metric-card m-safe">
-                <div class="metric-value">{{ total_issues }}</div>
+                <div class="metric-value">3</div>
                 <div class="metric-label">Total Findings</div>
             </div>
         </div>
 
-        <div class="glass-panel" style="animation-delay: 0.1s; text-align: center;">
-            <h2 style="justify-content: center; margin-bottom: 30px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                    <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
-                </svg>
-                Vulnerability Breakdown
-            </h2>
-            <div style="max-width: 400px; margin: 0 auto;">
-                <canvas id="vulnChart"></canvas>
-            </div>
-        </div>
-
-        <div class="glass-panel" style="animation-delay: 0.2s;">
+        <div class="glass-panel" style="animation-delay: 0.1s;">
             <h2>
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -417,86 +399,49 @@
                 </svg>
                 Gemini AI Analysis
             </h2>
-            <div class="ai-analysis">{{ ai_summary }}</div>
+            <div class="ai-analysis">AI Analysis: Multiple issues detected on this instance.</div>
         </div>
 
         <div class="section-title">Discovered Telemetry</div>
 
-        {% for finding in findings %}
-        <div class="glass-panel finding" style="animation-delay: {{ 0.4 + loop.index0 * 0.15 }}s;">
+        
+        <div class="glass-panel finding" style="animation-delay: 0.4s;">
             <div class="finding-title">
-                {{ finding.title }}
-                <span class="badge badge-{{ finding.severity }}">{{ finding.severity }}</span>
+                Port 22 Open
+                <span class="badge badge-High">High</span>
             </div>
-            <div class="finding-desc">{{ finding.description }}</div>
+            <div class="finding-desc">SSH port is accessible from public.</div>
 
-            {% if finding.remediation %}
+            
             <div class="remediation">
                 <strong>Recommended Mitigation</strong>
-                {{ finding.remediation }}
+                Change SSH port or restrict IP.
             </div>
-            {% endif %}
+            
         </div>
-        {% else %}
-        <div class="glass-panel" style="text-align: center; animation-delay: 0.4s;">
-            <p style="color: var(--text-muted); font-size: 1.1rem; margin: 0;">No significant vulnerabilities or
-                actionable findings were recorded.</p>
+        
+        <div class="glass-panel finding" style="animation-delay: 0.55s;">
+            <div class="finding-title">
+                Weak Password
+                <span class="badge badge-Critical">Critical</span>
+            </div>
+            <div class="finding-desc">Root password default</div>
+
+            
         </div>
-        {% endfor %}
+        
+        <div class="glass-panel finding" style="animation-delay: 0.7s;">
+            <div class="finding-title">
+                Outdated Version
+                <span class="badge badge-Medium">Medium</span>
+            </div>
+            <div class="finding-desc">System needs patching</div>
+
+            
+        </div>
+        
 
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const totalIssues = parseInt("{{ total_issues }}", 10);
-
-            if (totalIssues > 0) {
-                const ctx = document.getElementById('vulnChart').getContext('2d');
-                const data = {
-                    labels: ['Critical', 'High', 'Medium', 'Low', 'Info'],
-                    datasets: [{
-                        data: [
-                            parseInt("{{ critical_count }}", 10),
-                            parseInt("{{ high_count }}", 10),
-                            parseInt("{{ med_count }}", 10),
-                            parseInt("{{ low_count }}", 10),
-                            parseInt("{{ info_count }}", 10)
-                        ],
-                        backgroundColor: [
-                            'rgba(255, 51, 51, 0.8)',
-                            'rgba(255, 170, 0, 0.8)',
-                            'rgba(255, 204, 0, 0.8)',
-                            'rgba(0, 255, 204, 0.8)',
-                            'rgba(0, 153, 255, 0.8)'
-                        ],
-                        borderColor: 'rgba(20, 20, 22, 1)',
-                        borderWidth: 2,
-                        hoverOffset: 4
-                    }]
-                };
-
-                const config = {
-                    type: 'doughnut',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: { position: 'bottom', labels: { color: '#f0f0f0', font: { family: 'Outfit', size: 14 } } }
-                        },
-                        cutout: '70%',
-                        animation: { animateScale: true, animateRotate: true }
-                    }
-                };
-                new Chart(ctx, config);
-            } else {
-                const chartDiv = document.getElementById('vulnChart');
-                if (chartDiv && chartDiv.parentElement) {
-                    chartDiv.parentElement.innerHTML = '<p style="color:var(--success);">No vulnerabilities found to chart.</p>';
-                }
-            }
-        });
-    </script>
 </body>
 
 </html>
